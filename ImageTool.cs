@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -10,15 +9,15 @@ using System.Linq;
 // but please leave this comment :)
 
 
-namespace XnaFan.ImageComparison
+namespace ImageComparison
 {
 
     /// <summary>
-    /// A class with extensionmethods for comparing images
+    /// A class with extension methods for comparing images
     /// </summary>
     public static class ImageTool
     {
-        private static PathGrayscaleTupleComparer Comparer = new PathGrayscaleTupleComparer();
+        private static readonly PathGrayscaleTupleComparer Comparer = new();
 
         /// <summary>
         /// Gets the difference between two images as a percentage
@@ -30,19 +29,17 @@ namespace XnaFan.ImageComparison
         /// <returns>The difference between the two images as a percentage</returns>
         public static float GetPercentageDifference(string image1Path, string image2Path, byte threshold = 3)
         {
-            if (CheckIfFileExists(image1Path) && CheckIfFileExists(image2Path))
-            {
-                Image img1 = Image.FromFile(image1Path);
-                Image img2 = Image.FromFile(image2Path);
+            if (!CheckIfFileExists(image1Path) || !CheckIfFileExists(image2Path)) return -1;
+            var img1 = Image.FromFile(image1Path);
+            var img2 = Image.FromFile(image2Path);
 
-                float difference = img1.PercentageDifference(img2, threshold);
+            var difference = img1.PercentageDifference(img2, threshold);
 
-                img1.Dispose();
-                img2.Dispose();
+            img1.Dispose();
+            img2.Dispose();
 
-                return difference;
-            }
-            else return -1;
+            return difference;
+
         }
 
         /// <summary>
@@ -51,23 +48,20 @@ namespace XnaFan.ImageComparison
         /// <returns>The difference between the two images as a percentage</returns>
         /// <param name="image1Path">The path to the first image</param>
         /// <param name="image2Path">The path to the second image</param>
-        /// <param name="threshold">How big a difference (out of 255) will be ignored - the default is 3.</param>
         /// <returns>The difference between the two images as a percentage</returns>
         public static float GetBhattacharyyaDifference(string image1Path, string image2Path)
         {
-            if (CheckIfFileExists(image1Path) && CheckIfFileExists(image2Path))
-            {
-                Image img1 = Image.FromFile(image1Path);
-                Image img2 = Image.FromFile(image2Path);
+            if (!CheckIfFileExists(image1Path) || !CheckIfFileExists(image2Path)) return -1;
+            var img1 = Image.FromFile(image1Path);
+            var img2 = Image.FromFile(image2Path);
 
-                float difference = img1.BhattacharyyaDifference(img2);
+            var difference = img1.BhattacharyyaDifference(img2);
 
-                img1.Dispose();
-                img2.Dispose();
+            img1.Dispose();
+            img2.Dispose();
 
-                return difference;
-            }
-            else return -1;
+            return difference;
+
         }
 
 
@@ -78,7 +72,7 @@ namespace XnaFan.ImageComparison
         /// <param name="folderPath">The folder to look for duplicates in</param>
         /// <param name="checkSubfolders">Whether to look in subfolders too</param>
         /// <returns>A list of all the duplicates found, collected in separate Lists (one for each distinct image found)</returns>
-        public static List<List<string>> GetDuplicateImages(string folderPath, bool checkSubfolders)
+        public static IEnumerable<IEnumerable<string>> GetDuplicateImages(string folderPath, bool checkSubfolders)
         {
             var imagePaths = Directory.GetFiles(folderPath, "*.*", checkSubfolders ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly).ToList();
             return GetDuplicateImages(imagePaths);
@@ -89,45 +83,37 @@ namespace XnaFan.ImageComparison
         /// </summary>
         /// <param name="pathsOfPossibleDuplicateImages">The paths to the images to check for duplicates</param>
         /// <returns>A list of all the duplicates found, collected in separate Lists (one for each distinct image found)</returns>
-        public static List<List<string>> GetDuplicateImages(IEnumerable<string> pathsOfPossibleDuplicateImages)
+        public static IEnumerable<IEnumerable<string>> GetDuplicateImages(IEnumerable<string> pathsOfPossibleDuplicateImages)
         {
             var imagePathsAndGrayValues = GetSortedGrayscaleValues(pathsOfPossibleDuplicateImages);
             var duplicateGroups = GetDuplicateGroups(imagePathsAndGrayValues);
 
-            var pathsGroupedByDuplicates = new List<List<string>>();
-            foreach (var list in duplicateGroups)
-            {
-                pathsGroupedByDuplicates.Add(list.Select(tuple => tuple.Item1).ToList());
-            }
-
-            return pathsGroupedByDuplicates;
+            return duplicateGroups.Select(list => list.Select(tuple => tuple.Item1).ToList()).ToList();
         }
 
         #region Helpermethods
 
-        private static List<Tuple<string, byte[,]>> GetSortedGrayscaleValues(IEnumerable<string> pathsOfPossibleDuplicateImages)
+        private static IEnumerable<Tuple<string, byte[,]>> GetSortedGrayscaleValues(IEnumerable<string> pathsOfPossibleDuplicateImages)
         {
             var imagePathsAndGrayValues = new List<Tuple<string, byte[,]>>();
             foreach (var imagePath in pathsOfPossibleDuplicateImages)
             {
-                using (Image image = Image.FromFile(imagePath))
-                {
-                    byte[,] grayValues = image.GetGrayScaleValues();
-                    var tuple = new Tuple<string, byte[,]>(imagePath, grayValues);
-                    imagePathsAndGrayValues.Add(tuple);
-                }
+                using var image = Image.FromFile(imagePath);
+                var grayValues = image.GetGrayScaleValues();
+                var tuple = new Tuple<string, byte[,]>(imagePath, grayValues);
+                imagePathsAndGrayValues.Add(tuple);
             }
 
             imagePathsAndGrayValues.Sort(Comparer);
             return imagePathsAndGrayValues;
         }
 
-        private static List<List<Tuple<string, byte[,]>>> GetDuplicateGroups(List<Tuple<string, byte[,]>> imagePathsAndGrayValues)
+        private static IEnumerable<IEnumerable<Tuple<string, byte[,]>>> GetDuplicateGroups(IEnumerable<Tuple<string, byte[,]>> imagePathsAndGrayValues)
         {
-            var duplicateGroups = new List<List<Tuple<string, byte[,]>>>();
+            var duplicateGroups = new List<IEnumerable<Tuple<string, byte[,]>>>();
             var currentDuplicates = new List<Tuple<string, byte[,]>>();
 
-            foreach (Tuple<string, byte[,]> tuple in imagePathsAndGrayValues)
+            foreach (var tuple in imagePathsAndGrayValues)
             {
                 if (currentDuplicates.Any() && Comparer.Compare(currentDuplicates.First(), tuple) != 0)
                 {

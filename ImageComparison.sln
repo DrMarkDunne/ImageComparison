@@ -1,15 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageComparison", "ImageComparison\ImageComparison.csproj", "{9317DE4A-213D-4AFC-B58F-ED401204534A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageComparisonWpfGui", "ImageComparisonWpfGui\ImageComparisonWpfGui.csproj", "{37B365C0-ACD4-4A19-9CB7-08D19A651C14}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestingImageComparison_Console", "TestingImageComparison_Console\TestingImageComparison_Console.csproj", "{29A38371-DEEC-473D-8CE1-49FD9C74B352}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleComparison", "ConsoleComparison\ConsoleComparison.csproj", "{B8370B52-89D2-4D5E-AC9B-99A7E221309C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageComparison", "ImageComparison.csproj", "{2051B5D9-54FB-4C58-8AAA-A410908F3B74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,28 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9317DE4A-213D-4AFC-B58F-ED401204534A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9317DE4A-213D-4AFC-B58F-ED401204534A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9317DE4A-213D-4AFC-B58F-ED401204534A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9317DE4A-213D-4AFC-B58F-ED401204534A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{37B365C0-ACD4-4A19-9CB7-08D19A651C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{37B365C0-ACD4-4A19-9CB7-08D19A651C14}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{37B365C0-ACD4-4A19-9CB7-08D19A651C14}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{37B365C0-ACD4-4A19-9CB7-08D19A651C14}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29A38371-DEEC-473D-8CE1-49FD9C74B352}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29A38371-DEEC-473D-8CE1-49FD9C74B352}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29A38371-DEEC-473D-8CE1-49FD9C74B352}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29A38371-DEEC-473D-8CE1-49FD9C74B352}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B8370B52-89D2-4D5E-AC9B-99A7E221309C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B8370B52-89D2-4D5E-AC9B-99A7E221309C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B8370B52-89D2-4D5E-AC9B-99A7E221309C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B8370B52-89D2-4D5E-AC9B-99A7E221309C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2051B5D9-54FB-4C58-8AAA-A410908F3B74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2051B5D9-54FB-4C58-8AAA-A410908F3B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2051B5D9-54FB-4C58-8AAA-A410908F3B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2051B5D9-54FB-4C58-8AAA-A410908F3B74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72C8006D-653B-4139-8E00-60BFA31CE073}
 	EndGlobalSection
 EndGlobal
