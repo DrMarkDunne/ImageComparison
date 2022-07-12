@@ -47,6 +47,54 @@ namespace ImageComparison
         /// </summary>
         /// <returns>The difference between the two images as a percentage</returns>
         /// <param name="image1Path">The path to the first image</param>
+        /// <param name="image2Bitmap">The second image in Bitmap format</param>
+        /// <param name="threshold">How big a difference (out of 255) will be ignored - the default is 3.</param>
+        /// <returns>The difference between the two images as a percentage</returns>
+
+        public static float GetPercentageDifference(string image1Path, Bitmap image2Bitmap, byte threshold = 3)
+        {
+            if (!CheckIfFileExists(image1Path)) return -1;
+            var img1 = Image.FromFile(image1Path);
+            var img2 = Image.FromHbitmap(image2Bitmap.GetHbitmap());
+
+            var difference = img1.PercentageDifference(img2, threshold);
+
+            img1.Dispose();
+            img2.Dispose();
+
+            return difference;
+
+        }
+
+        /// <summary>
+        /// Gets the difference between two images as a percentage
+        /// </summary>
+        /// <returns>The difference between the two images as a percentage</returns>
+        /// <param name="image1Bitmap">The first image in Bitmap format</param>
+        /// <param name="image2Bitmap">The second image in Bitmap format</param>
+        /// <param name="threshold">How big a difference (out of 255) will be ignored - the default is 3.</param>
+        /// <returns>The difference between the two images as a percentage</returns>
+
+        public static float GetPercentageDifference(Bitmap image1Bitmap, Bitmap image2Bitmap, byte threshold = 3)
+        {
+
+            var img1 = Image.FromHbitmap(image1Bitmap.GetHbitmap());
+            var img2 = Image.FromHbitmap(image2Bitmap.GetHbitmap());
+
+            var difference = img1.PercentageDifference(img2, threshold);
+
+            img1.Dispose();
+            img2.Dispose();
+
+            return difference;
+
+        }
+
+        /// <summary>
+        /// Gets the difference between two images as a percentage
+        /// </summary>
+        /// <returns>The difference between the two images as a percentage</returns>
+        /// <param name="image1Path">The path to the first image</param>
         /// <param name="image2Path">The path to the second image</param>
         /// <returns>The difference between the two images as a percentage</returns>
         public static float GetBhattacharyyaDifference(string image1Path, string image2Path)
@@ -54,6 +102,49 @@ namespace ImageComparison
             if (!CheckIfFileExists(image1Path) || !CheckIfFileExists(image2Path)) return -1;
             var img1 = Image.FromFile(image1Path);
             var img2 = Image.FromFile(image2Path);
+
+            var difference = img1.BhattacharyyaDifference(img2);
+
+            img1.Dispose();
+            img2.Dispose();
+
+            return difference;
+
+        }
+
+        /// <summary>
+        /// Gets the difference between two images as a percentage
+        /// </summary>
+        /// <returns>The difference between the two images as a percentage</returns>
+        /// <param name="image1Path">The path to the first image</param>
+        /// <param name="image2Bitmap">The second image in Bitmap format</param>
+        /// <returns>The difference between the two images as a percentage</returns>
+        public static float GetBhattacharyyaDifference(string image1Path, Bitmap image2Bitmap)
+        {
+            if (!CheckIfFileExists(image1Path)) return -1;
+            var img1 = Image.FromFile(image1Path);
+            var img2 = Image.FromHbitmap(image2Bitmap.GetHbitmap());
+
+            var difference = img1.BhattacharyyaDifference(img2);
+
+            img1.Dispose();
+            img2.Dispose();
+
+            return difference;
+
+        }
+
+        /// <summary>
+        /// Gets the difference between two images as a percentage
+        /// </summary>
+        /// <returns>The difference between the two images as a percentage</returns>
+        /// <param name="image1Bitmap">The first image in Bitmap format</param>
+        /// <param name="image2Bitmap">The second image in Bitmap format</param>
+        /// <returns>The difference between the two images as a percentage</returns>
+        public static float GetBhattacharyyaDifference(Bitmap image1Bitmap, Bitmap image2Bitmap)
+        {
+            var img1 = Image.FromHbitmap(image1Bitmap.GetHbitmap());
+            var img2 = Image.FromHbitmap(image2Bitmap.GetHbitmap());
 
             var difference = img1.BhattacharyyaDifference(img2);
 
